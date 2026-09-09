@@ -7,6 +7,8 @@
 <meta name="theme-color" content="#0B1026">
 <meta property="og:title" content="Кате — 28">
 <meta property="og:description" content="Открой — тут целый путь">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Prata&family=Manrope:wght@200;300;500&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
@@ -16,7 +18,8 @@
   --rose:#9C4F63; --peach:#E8916B; --gold:#F5C879; --cream:#FDF3E7; --sky:#BBD4EF;
   --fg:#F3EAE2;
   --accent:#F5C879;
-  --panel:rgba(9,12,32,.42);
+  --panel:rgba(9,12,32,.34);
+  --glass:rgba(255,255,255,.08);
   --edge:rgba(255,255,255,.18);
   --tsh:0 2px 16px rgba(6,10,30,.6);
   --ink2:#3B2230;
@@ -75,9 +78,9 @@ main{position:relative;z-index:3}
   padding:13svh 5vw;text-align:center;position:relative;overflow-x:clip;
   text-shadow:var(--tsh)}
 .wrap{width:var(--w);margin:0 auto;position:relative;max-width:100%}
-/* мягкая подложка — чтобы текст читался на любом небе и поверх облаков */
-.wrap::before{content:'';position:absolute;inset:-1.4rem -1.6rem;z-index:-1;pointer-events:none;
-  border-radius:34px;background:radial-gradient(76% 74% at 50% 50%,var(--panel),transparent 84%);
+/* мягкое свечение под текстом — без краёв и рамок */
+.wrap::before{content:'';position:absolute;inset:-.6rem -1.2rem;z-index:-1;pointer-events:none;
+  border-radius:46% 44% 48% 46%;background:var(--panel);filter:blur(30px);opacity:.9;
   transition:background .7s linear}
 h1,h2,.disp{font-family:'Prata',Georgia,serif;font-weight:400;line-height:1.12}
 h2{font-size:clamp(1.8rem,7vw,2.7rem);margin-bottom:.9rem}
@@ -146,7 +149,7 @@ p+p{margin-top:1rem}
 .rail figure:not(.now){filter:saturate(.92)}
 /* стрелки — только там, где есть мышь */
 .arw{position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:46px;height:46px;
-  border-radius:50%;border:1px solid var(--edge);background:var(--panel);backdrop-filter:blur(8px);
+  border-radius:50%;border:1px solid var(--edge);background:var(--glass);backdrop-filter:blur(8px);
   color:inherit;font-size:1.2rem;line-height:1;cursor:pointer;display:none;place-items:center;
   opacity:.75;transition:opacity .3s,transform .3s,background .5s}
 .arw:hover{opacity:1;transform:translateY(-50%) scale(1.08)}
@@ -182,7 +185,7 @@ p+p{margin-top:1rem}
 .card .s{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;display:grid;place-content:center;
   padding:.9rem;text-align:center;border:1px solid var(--edge);backdrop-filter:blur(7px);
   transition:background .6s linear,border-color .6s linear}
-.card .front{background:var(--panel)}
+.card .front{background:var(--glass)}
 .card:hover .front{border-color:var(--accent)}
 .card .front b{font-family:'Prata',serif;font-weight:400;font-size:1.05rem;display:block}
 .card .front em{display:block;font-style:normal;font-size:.62rem;letter-spacing:.16em;opacity:.68;margin-top:.5rem}
@@ -218,16 +221,21 @@ p+p{margin-top:1rem}
   font-size:.74rem;letter-spacing:.22em;color:#F3EAE2;opacity:.65}
 
 /* ═══ торт ═══ */
-#cake{width:min(90vw,26rem);margin:1rem auto 0}
-#cake svg{width:100%;height:auto;overflow:visible}
-.fl{cursor:pointer;transition:opacity .4s,transform .4s;transform-origin:center bottom}
-.fl.out{opacity:0;transform:scaleY(.2)}
-.fl ellipse{animation:flick .5s ease-in-out infinite alternate}
-@keyframes flick{from{transform:scaleY(1)}to{transform:scaleY(.82) translateY(1px)}}
+#cake{width:100vw;flex:none;margin:.6rem 0 0;margin-inline:calc(50% - 50vw)}
+#cake svg{width:min(96vw,30rem);margin:0 auto;height:auto;display:block;overflow:visible;
+  filter:drop-shadow(0 30px 50px rgba(60,20,40,.28))}
+@media(min-width:900px){#cake svg{width:min(52vw,42rem)}}
+.fl{cursor:pointer;transition:opacity .45s,transform .45s;transform-origin:center bottom}
+.fl.out{opacity:0;transform:translateY(-6px) scaleY(.2)}
+.fl .hit{fill:#fff;fill-opacity:0;pointer-events:all}
+.fl .fire{animation:flick .42s ease-in-out infinite alternate;transform-origin:center bottom}
+.fl .halo{animation:halo 1.6s ease-in-out infinite alternate}
+@keyframes flick{from{transform:scaleY(1) scaleX(1)}to{transform:scaleY(.84) scaleX(1.08) translateY(1px)}}
+@keyframes halo{from{opacity:.5}to{opacity:.95}}
 
 /* ═══ кнопка ═══ */
 .btn{display:inline-block;margin-top:1.8rem;padding:.9rem 2rem;border-radius:999px;
-  border:1px solid var(--edge);background:var(--panel);color:inherit;font:inherit;
+  border:1px solid var(--edge);background:var(--glass);color:inherit;font:inherit;
   font-size:.95rem;cursor:pointer;backdrop-filter:blur(6px);transition:all .35s;
   box-shadow:0 10px 30px rgba(6,8,24,.25)}
 .btn:hover{border-color:var(--accent);transform:translateY(-2px)}
@@ -291,7 +299,7 @@ p+p{margin-top:1rem}
     <p class="mark r" style="margin:1.2rem 0 1rem">Проведи пальцем — разгони туман</p>
   </div>
   <div id="scratch" class="r">
-    <img src="img/IMG_20260909_203503_231.webp" alt="">
+    <img data-src="img/IMG_20260909_203503_231.webp" alt="">
     <canvas></canvas>
   </div>
   <p class="cap r">Ковёр, диван и телепузик. Ты уже тогда сидела в центре — и с тех пор ничего не поменялось.</p>
@@ -305,17 +313,17 @@ p+p{margin-top:1rem}
     <p class="tag r">ДЕНЬ, КОГДА ТЫ СКАЗАЛА ДА</p>
   </div>
   <div id="petalzone" class="r" style="margin-top:1.4rem">
-    <figure class="frame"><img src="img/355.webp" alt=""></figure>
+    <figure class="frame"><img data-src="img/355.webp" alt=""></figure>
   </div>
   <p class="cap r">Нажми на фото — пусть снова летят лепестки</p>
   <div class="wrap">
     <p class="r" style="margin-top:1.6rem">Ты стояла там такая красивая, что папа не мог смотреть прямо. А потом был танец — и весь зал замолчал.</p>
   </div>
   <div class="rail r" id="rail1" style="margin-top:1rem">
-    <figure><img src="img/347.webp" alt="" loading="lazy"></figure>
-    <figure><img src="img/352.webp" alt="" loading="lazy"></figure>
-    <figure><img src="img/238.webp" alt="" loading="lazy"></figure>
-    <figure><img src="img/321.webp" alt="" loading="lazy"></figure>
+    <figure><img data-src="img/347.webp" alt="" loading="lazy"></figure>
+    <figure><img data-src="img/352.webp" alt="" loading="lazy"></figure>
+    <figure><img data-src="img/238.webp" alt="" loading="lazy"></figure>
+    <figure><img data-src="img/321.webp" alt="" loading="lazy"></figure>
   </div>
 </section>
 
@@ -327,7 +335,7 @@ p+p{margin-top:1rem}
     <p class="mark r" style="margin-top:1rem">Лопни шарики — там кто-то прячется</p>
   </div>
   <div id="balloons" class="r">
-    <div class="rev"><figure class="frame"><img src="img/0107.webp" alt="" loading="lazy"></figure></div>
+    <div class="rev"><figure class="frame"><img data-src="img/0107.webp" alt="" loading="lazy"></figure></div>
   </div>
   <p class="cap r" style="margin-top:.8rem">Арина. Три килограмма причин, по которым ты стала ещё сильнее.</p>
 </section>
@@ -341,12 +349,12 @@ p+p{margin-top:1rem}
     <p class="mark r" style="margin-top:.8rem">Листай вбок →</p>
   </div>
   <div class="rail r" id="rail2">
-    <figure><img src="img/20230429_135452.webp" alt="" loading="lazy"></figure>
-    <figure><img src="img/20230610_182505.webp" alt="" loading="lazy"></figure>
-    <figure><img src="img/20230610_190821.webp" alt="" loading="lazy"></figure>
-    <figure><img src="img/20221030_183703.webp" alt="" loading="lazy"></figure>
-    <figure><img src="img/20230812_192459.webp" alt="" loading="lazy"></figure>
-    <figure><img src="img/0132.webp" alt="" loading="lazy"></figure>
+    <figure><img data-src="img/20230429_135452.webp" alt="" loading="lazy"></figure>
+    <figure><img data-src="img/20230610_182505.webp" alt="" loading="lazy"></figure>
+    <figure><img data-src="img/20230610_190821.webp" alt="" loading="lazy"></figure>
+    <figure><img data-src="img/20221030_183703.webp" alt="" loading="lazy"></figure>
+    <figure><img data-src="img/20230812_192459.webp" alt="" loading="lazy"></figure>
+    <figure><img data-src="img/0132.webp" alt="" loading="lazy"></figure>
   </div>
 </section>
 
@@ -357,16 +365,16 @@ p+p{margin-top:1rem}
     <p class="tag r">И ВОТ ТЫ СЕЙЧАС</p>
   </div>
   <figure class="frame r" style="width:min(88vw,24rem);margin-top:1.4rem">
-    <img src="img/IMG_20260909_203503_202.webp" alt="" loading="lazy">
+    <img data-src="img/IMG_20260909_203503_202.webp" alt="" loading="lazy">
   </figure>
   <div class="wrap">
     <p class="r" style="margin-top:1.4rem">Взрослая, самостоятельная, невероятно красивая — и при этом всё та же наша девочка. Добрая, чуткая, с самым искренним смехом.</p>
   </div>
   <div class="rail r" id="rail3">
-    <figure><img src="img/IMG_20260909_203503_406.webp" alt="" loading="lazy"></figure>
-    <figure><img src="img/IMG_20260909_203503_255.webp" alt="" loading="lazy"></figure>
-    <figure><img src="img/IMG_20260909_203503_275.webp" alt="" loading="lazy"></figure>
-    <figure><img src="img/IMG_20260909_203503_414.webp" alt="" loading="lazy"></figure>
+    <figure><img data-src="img/IMG_20260909_203503_406.webp" alt="" loading="lazy"></figure>
+    <figure><img data-src="img/IMG_20260909_203503_255.webp" alt="" loading="lazy"></figure>
+    <figure><img data-src="img/IMG_20260909_203503_275.webp" alt="" loading="lazy"></figure>
+    <figure><img data-src="img/IMG_20260909_203503_414.webp" alt="" loading="lazy"></figure>
   </div>
 </section>
 
@@ -479,6 +487,10 @@ p+p{margin-top:1rem}
 (function(){
 'use strict';
 var RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* фото глав подставляем скриптом: так превью ссылки остаётся без картинки */
+[].forEach.call(document.querySelectorAll('img[data-src]'),function(im){
+  im.src=im.getAttribute('data-src'); im.removeAttribute('data-src');
+});
 var W = innerWidth, H = innerHeight;
 
 /* ═══════════ НЕБО: цвет, звёзды, светило, облака ═══════════ */
@@ -539,9 +551,9 @@ addEventListener('resize',function(){W=innerWidth;H=innerHeight;makeStars();size
 
 /* тема текста: считаем яркость неба и подбираем читаемую пару цветов */
 var themeLight=false, themeSet=false, root=document.documentElement;
-var DARK={fg:'#F3EAE2',accent:'#F5C879',panel:'rgba(9,12,32,.42)',
+var DARK={fg:'#F3EAE2',accent:'#F5C879',panel:'rgba(9,12,32,.34)',
           edge:'rgba(255,255,255,.18)',tsh:'0 2px 16px rgba(6,10,30,.6)'};
-var LIGHT={fg:'#3B2230',accent:'#A8452F',panel:'rgba(255,251,244,.55)',
+var LIGHT={fg:'#3B2230',accent:'#A8452F',panel:'rgba(255,250,242,.5)',
           edge:'rgba(59,34,48,.24)',tsh:'0 1px 2px rgba(255,255,255,.75)'};
 function setTheme(light){
   if(themeSet && light===themeLight) return;
@@ -552,6 +564,7 @@ function setTheme(light){
   root.style.setProperty('--panel',T.panel);
   root.style.setProperty('--edge',T.edge);
   root.style.setProperty('--tsh',T.tsh);
+  root.style.setProperty('--glass', light?'rgba(255,252,247,.5)':'rgba(255,255,255,.08)');
   document.querySelector('meta[name=theme-color]').setAttribute('content', light?'#F0D8BE':'#0B1026');
   document.dispatchEvent(new Event('themechange'));
 }
@@ -667,7 +680,7 @@ scenes.forEach(function(s){navIo.observe(s);});
     for(var i=0;i<n;i++)
       P.push(one(x===undefined?Math.random()*w:x+(Math.random()-.5)*140,
                  y===undefined?-30-Math.random()*h*0.5:y+(Math.random()-.5)*60));
-    if(P.length>140) P.splice(0,P.length-140);
+    if(P.length>240) P.splice(0,P.length-240);
   }
   function loop(){
     if(!on){ cx.clearRect(0,0,w,h); return; }
@@ -695,11 +708,20 @@ scenes.forEach(function(s){navIo.observe(s);});
     });
   },{threshold:.05}).observe(sec);
   /* тап по фото — горсть лепестков прямо из точки касания */
-  document.getElementById('petalzone').addEventListener('click',function(e){
-    var r=sec.getBoundingClientRect();
+  var zone=document.getElementById('petalzone');
+  zone.addEventListener('click',function(e){
     if(!on && !RM){ on=true; size(); requestAnimationFrame(loop); }
-    add(34, e.clientX-r.left, e.clientY-r.top-40);
-    burst(e.clientX, e.clientY, 22, ['#F7D9E0','#FDF3E7','#F5C879']);
+    var sr=sec.getBoundingClientRect(), fr=zone.getBoundingClientRect();
+    var x0=fr.left-sr.left-70, w0=fr.width+140, y0=fr.top-sr.top;
+    /* сыплем над всей фотографией и по бокам от неё */
+    for(var i=0;i<80;i++)
+      P.push(one(x0+Math.random()*w0, y0-20-Math.random()*fr.height*0.9));
+    for(var k=0;k<14;k++){
+      P.push(one(x0+Math.random()*40, y0+Math.random()*fr.height*.5));
+      P.push(one(x0+w0-Math.random()*40, y0+Math.random()*fr.height*.5));
+    }
+    if(P.length>240) P.splice(0,P.length-240);
+    burst(e.clientX, e.clientY, 26, ['#F7D9E0','#FDF3E7','#F5C879','#EBC6D2']);
   });
   addEventListener('resize',function(){ if(on) size(); });
 })();
@@ -798,14 +820,19 @@ function letter(sealId, letId){
     burst(r.left+r.width/2,r.top+r.height/2,26,['#9C4F63','#F5C879','#FDF3E7']);
     seal.classList.add('gone'); box.classList.add('open');
     var ps=[].slice.call(box.querySelectorAll('[data-t]')), i=0;
+    var sig=box.querySelector('.sig');
+    /* гасим сразу весь текст, иначе абзацы успевают мелькнуть целиком */
+    var full=ps.map(function(el){ var t=el.textContent; el.textContent=''; return t; });
+    if(sig){ sig.style.opacity='0'; sig.style.transition='opacity 1.2s ease'; }
+    function finish(){ if(sig) sig.style.opacity='1'; }
     (function nextP(){
-      if(i>=ps.length) return;
-      var el=ps[i++], full=el.textContent; el.textContent=''; el.classList.add('type');
-      if(RM){ el.textContent=full; el.classList.remove('type'); nextP(); return; }
+      if(i>=ps.length){ finish(); return; }
+      var el=ps[i], text=full[i]; i++; el.classList.add('type');
+      if(RM){ el.textContent=text; el.classList.remove('type'); nextP(); return; }
       var j=0;
       (function tick(){
-        el.textContent=full.slice(0,j+=2);
-        if(j<full.length) setTimeout(tick,12);
+        el.textContent=text.slice(0,j+=2);
+        if(j<text.length) setTimeout(tick,12);
         else { el.classList.add('fin'); setTimeout(nextP,220); }
       })();
     })();
@@ -950,33 +977,106 @@ var GAL=['20230812_192459','IMG-20210522-WA0002','0130','20230811_160424','20221
 
 /* ═══════════ торт ═══════════ */
 (function(){
-  var host=document.getElementById('cake'), N=28, cols=14;
-  var s='<svg viewBox="0 0 400 300">';
-  s+='<defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">'+
-     '<stop offset="0" stop-color="#FDF3E7"/><stop offset="1" stop-color="#EBC6D2"/></linearGradient>'+
-     '<linearGradient id="cg2" x1="0" y1="0" x2="0" y2="1">'+
-     '<stop offset="0" stop-color="#F7D9E0"/><stop offset="1" stop-color="#D9A0B4"/></linearGradient></defs>';
-  /* свечи */
-  var i,x,y,row,col;
-  for(i=0;i<N;i++){
-    row=Math.floor(i/cols); col=i%cols;
-    x=60+col*20.5; y=row?150:118;
-    s+='<rect x="'+(x-2)+'" y="'+y+'" width="4" height="26" rx="2" fill="'+(i%2?'#F5C879':'#EBA6B8')+'"/>';
-    s+='<g class="fl" data-i="'+i+'"><ellipse cx="'+x+'" cy="'+(y-7)+'" rx="3.4" ry="6.4" fill="#F5C879"/>'+
-       '<ellipse cx="'+x+'" cy="'+(y-6)+'" rx="1.6" ry="3.4" fill="#FFF6E2"/></g>';
+  var host=document.getElementById('cake'), N=28;
+  function RND(seed){ var x=Math.sin(seed*127.1)*43758.5453; return x-Math.floor(x); }
+
+  /* потёки глазури от верхнего края яруса */
+  function glaze(x0,x1,y,dp,fill,seed){
+    var n=Math.max(5,Math.round((x1-x0)/30)), st=(x1-x0)/n, p='M'+x0+' '+(y-16)+' L'+x0+' '+y;
+    for(var i=0;i<n;i++){
+      var a=x0+i*st, b=a+st, d=dp*(0.5+RND(seed+i)*0.9);
+      p+=' Q'+(a+st*.28)+' '+(y+d)+' '+(a+st*.5)+' '+(y+d*.6);
+      p+=' Q'+(a+st*.74)+' '+(y+d*.06)+' '+b+' '+(y+d*.45);
+    }
+    p+=' L'+x1+' '+(y-16)+' Z';
+    return '<path d="'+p+'" fill="'+fill+'"/>';
   }
-  s+='<rect x="46" y="176" width="308" height="52" rx="12" fill="url(#cg)"/>';
-  s+='<rect x="30" y="222" width="340" height="58" rx="14" fill="url(#cg2)"/>';
-  s+='<path d="M46 186 q20 14 40 0 q20 14 40 0 q20 14 40 0 q20 14 40 0 q20 14 40 0 q20 14 40 0 q20 14 40 0 q10 7 14 2 v-12 h-308z" fill="#FDF3E7" opacity=".85"/>';
+  function sprinkles(x0,x1,y0,y1,n,seed){
+    var out='', C=['#F5C879','#E58AA6','#FFF8EC','#C98BB4','#F2A07B'];
+    for(var i=0;i<n;i++){
+      var x=x0+RND(seed+i*1.7)*(x1-x0), y=y0+RND(seed+i*2.3)*(y1-y0),
+          r=RND(seed+i*3.1)*180, c=C[(RND(seed+i*4.7)*C.length)|0];
+      out+='<rect x="'+(x-3.2)+'" y="'+(y-1.2)+'" width="6.4" height="2.4" rx="1.2" fill="'+c+
+           '" opacity=".9" transform="rotate('+r.toFixed(1)+' '+x+' '+y+')"/>';
+    }
+    return out;
+  }
+  /* кремовые розочки по нижнему шву яруса */
+  function rosettes(x0,x1,y,r){
+    var out='', n=Math.round((x1-x0)/(r*2.1));
+    for(var i=0;i<=n;i++){
+      var x=x0+r+i*((x1-x0-r*2)/n);
+      out+='<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#FFF8EC"/>'+
+           '<circle cx="'+(x-r*.3)+'" cy="'+(y-r*.32)+'" r="'+(r*.4)+'" fill="#fff" opacity=".75"/>';
+    }
+    return out;
+  }
+  /* ярус: тело + эллиптическая крышка + глазурь + посыпка */
+  function tier(cx,y,w,h,body,top,seed){
+    var x0=cx-w/2, x1=cx+w/2, ry=w*0.082;
+    return '<rect x="'+x0+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+(w*0.035).toFixed(1)+'" fill="'+body+'"/>'+
+      sprinkles(x0+12,x1-12,y+h*0.42,y+h-8,Math.round(w/12),seed)+
+      glaze(x0,x1,y+h*0.30,h*0.26,'#FFF8EC',seed+5.5)+
+      '<ellipse cx="'+cx+'" cy="'+y+'" rx="'+(w/2)+'" ry="'+ry.toFixed(1)+'" fill="'+top+'"/>'+
+      '<ellipse cx="'+cx+'" cy="'+(y-1.5)+'" rx="'+(w/2-6)+'" ry="'+(ry-3).toFixed(1)+'" fill="#fff" opacity=".45"/>';
+  }
+  /* свеча: тело в полоску, фитиль, огонёк с ореолом */
+  function candle(x,base,hgt,i){
+    var col=(i%2)?'#F5C879':'#E58AA6', top=base-hgt, o='';
+    o+='<rect x="'+(x-2.7)+'" y="'+top+'" width="5.4" height="'+hgt+'" rx="2.7" fill="'+col+'"/>';
+    o+='<rect x="'+(x-2.7)+'" y="'+(top+hgt*0.3)+'" width="5.4" height="3" fill="#FFF8EC" opacity=".7"/>';
+    o+='<rect x="'+(x-2.7)+'" y="'+(top+hgt*0.62)+'" width="5.4" height="3" fill="#FFF8EC" opacity=".7"/>';
+    o+='<rect x="'+(x-2.7)+'" y="'+top+'" width="2" height="'+hgt+'" rx="1" fill="#fff" opacity=".3"/>';
+    o+='<path d="M'+x+' '+top+' v-4" stroke="#6B5648" stroke-width="1.2" stroke-linecap="round"/>';
+    return o;
+  }
+  function flame(x,base,hgt,i){
+    var y=base-hgt-9;
+    return '<g class="fl" data-i="'+i+'">'+
+      '<circle class="hit" cx="'+x+'" cy="'+y+'" r="12"/>'+
+      '<ellipse class="halo" cx="'+x+'" cy="'+y+'" rx="9" ry="13" fill="url(#fhalo)"/>'+
+      '<ellipse class="fire" cx="'+x+'" cy="'+y+'" rx="3.5" ry="7.2" fill="#F7B54A"/>'+
+      '<ellipse class="fire" cx="'+x+'" cy="'+(y+1.6)+'" rx="1.6" ry="3.8" fill="#FFF6E2"/>'+
+      '</g>';
+  }
+
+  var s='<svg viewBox="0 0 400 392" role="img" aria-label="Праздничный торт с 28 свечами">';
+  s+='<defs>'+
+     '<linearGradient id="t1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFBF2"/><stop offset="1" stop-color="#F1CFD8"/></linearGradient>'+
+     '<linearGradient id="t2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBE2E8"/><stop offset="1" stop-color="#DFA5B8"/></linearGradient>'+
+     '<linearGradient id="t3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4D2DC"/><stop offset="1" stop-color="#CB8AA4"/></linearGradient>'+
+     '<linearGradient id="pl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FDF3E7"/><stop offset="1" stop-color="#C9B3A2"/></linearGradient>'+
+     '<radialGradient id="warm"><stop offset="0" stop-color="#FFD98A" stop-opacity=".5"/><stop offset="1" stop-color="#FFD98A" stop-opacity="0"/></radialGradient>'+
+     '<radialGradient id="fhalo"><stop offset="0" stop-color="#FFE9A8" stop-opacity=".55"/><stop offset=".45" stop-color="#FFD98A" stop-opacity=".22"/><stop offset="1" stop-color="#F5A93C" stop-opacity="0"/></radialGradient>'+
+     '</defs>';
+
+  s+='<ellipse cx="200" cy="176" rx="200" ry="132" fill="url(#warm)"/>';
+  /* блюдо */
+  s+='<ellipse cx="200" cy="374" rx="192" ry="16" fill="url(#pl)"/>';
+  s+='<ellipse cx="200" cy="370" rx="176" ry="12" fill="#FFF8EC" opacity=".65"/>';
+  /* ярусы снизу вверх */
+  s+=tier(200,300,326,68,'url(#t3)','#F7DCE4',31.1)+rosettes(37,363,368,9);
+  s+=tier(200,238,258,62,'url(#t2)','#FCE9EE',17.9)+rosettes(71,329,300,8);
+  s+=tier(200,184,190,54,'url(#t1)','#FFFCF6',7.3)+rosettes(105,295,238,7);
+
+  /* свечи: два ряда по дуге верхней крышки */
+  /* три ряда по дуге — так 28 свечей не сливаются в частокол */
+  var i, ROWS=[[10,118,282,173,30],[9,124,278,186,35],[9,118,282,199,40]], k=0;
+  ROWS.forEach(function(R){
+    var st=(R[2]-R[1])/(R[0]-1), row=[];
+    for(i=0;i<R[0];i++) row.push([R[1]+i*st, R[3], R[4]+(i%2)*2, k++]);
+    row.forEach(function(c){ s+=candle(c[0],c[1],c[2],c[3]); });
+    row.forEach(function(c){ s+=flame(c[0],c[1],c[2],c[3]); });
+  });
   s+='</svg>';
   host.innerHTML=s;
+
   var fls=[].slice.call(host.querySelectorAll('.fl')), left=N, done=false;
   function out(el){
     if(el.classList.contains('out'))return; el.classList.add('out');
     var r=el.getBoundingClientRect();
-    burst(r.left+r.width/2,r.top,5,['#EFE3CB','#C9BFB2']);
-    if(--left<=0 && !done){ done=true;
-      setTimeout(function(){ burst(innerWidth/2,innerHeight*0.35,120,['#F5C879','#FDF3E7','#EBC6D2','#BBD4EF','#E8916B']); },300); }
+    burst(r.left+r.width/2,r.top+r.height*.3,6,['#EFE3CB','#C9BFB2','#F5C879']);
+    if(--left<=0 && !done){ done=true; setTimeout(function(){ bigShow(4000); },300); }
   }
   fls.forEach(function(el){ el.addEventListener('click',function(){out(el);}); });
   document.getElementById('blowall').addEventListener('click',function(){
@@ -1010,15 +1110,23 @@ function fxLoop(){
   if(FP.length) raf=requestAnimationFrame(fxLoop);
   else { raf=null; fc.clearRect(0,0,innerWidth,innerHeight); }
 }
-document.getElementById('again').addEventListener('click',function(){
-  for(var k=0;k<4;k++) setTimeout(function(){
-    burst(innerWidth*(.2+Math.random()*.6), innerHeight*(.2+Math.random()*.35), 70,
-      ['#F5C879','#FDF3E7','#EBC6D2','#BBD4EF','#E8916B','#9C4F63']);
-  }, k*260);
-});
+var showTimer=null;
+function bigShow(ms){
+  if(RM) return;
+  clearInterval(showTimer);
+  var t0=Date.now(), COL=['#F5C879','#FDF3E7','#EBC6D2','#BBD4EF','#E8916B','#9C4F63','#F7D9E0'];
+  function volley(){
+    burst(innerWidth*(.15+Math.random()*.7), innerHeight*(.15+Math.random()*.45),
+      55+((Math.random()*40)|0), COL);
+    if(Date.now()-t0>ms) clearInterval(showTimer);
+  }
+  volley();
+  showTimer=setInterval(volley,300);
+}
+document.getElementById('again').addEventListener('click',function(){ bigShow(5000); });
 var endSeen=false;
 new IntersectionObserver(function(es){ es.forEach(function(e){
-  if(e.isIntersecting && !endSeen){ endSeen=true; document.getElementById('again').click(); }
+  if(e.isIntersecting && !endSeen){ endSeen=true; bigShow(5000); }
 });},{threshold:.5}).observe(document.getElementById('s12'));
 
 /* ═══════════ главный цикл ═══════════ */
